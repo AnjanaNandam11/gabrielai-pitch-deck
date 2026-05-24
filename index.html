@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GabrielAI — Your Voice, Everywhere</title>
+  <meta name="description" content="GabrielAI pitch deck: AI-powered voicemail drops that sound like you, reach thousands, and close deals while you sleep." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0f;
+      color: #e8e8f0;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ===== SLIDE DECK ===== */
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 80px;
+      opacity: 0;
+      transform: translateX(60px);
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: all;
+    }
+    #slide-1.active {
+      transition: none;
+    }
+    .slide.exit-left {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+    .slide.exit-right {
+      opacity: 0;
+      transform: translateX(60px);
+    }
+
+    /* ===== BACKGROUNDS ===== */
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .slide > * { position: relative; z-index: 1; }
+
+    .bg-gradient-1::before {
+      background: radial-gradient(ellipse at 30% 20%, rgba(91, 33, 182, 0.22) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 80%, rgba(37, 99, 186, 0.12) 0%, transparent 50%),
+                  #0a0a0f;
+    }
+    .bg-gradient-2::before {
+      background: radial-gradient(ellipse at 70% 30%, rgba(109, 40, 217, 0.18) 0%, transparent 55%),
+                  radial-gradient(ellipse at 20% 70%, rgba(22, 163, 74, 0.08) 0%, transparent 50%),
+                  #0a0a0f;
+    }
+    .bg-gradient-3::before {
+      background: radial-gradient(ellipse at 50% 50%, rgba(91, 33, 182, 0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 10% 90%, rgba(190, 50, 120, 0.1) 0%, transparent 50%),
+                  #0a0a0f;
+    }
+    .bg-gradient-4::before {
+      background: radial-gradient(ellipse at 60% 20%, rgba(37, 99, 186, 0.18) 0%, transparent 55%),
+                  radial-gradient(ellipse at 30% 80%, rgba(109, 40, 217, 0.12) 0%, transparent 50%),
+                  #0a0a0f;
+    }
+    .bg-gradient-5::before {
+      background: radial-gradient(ellipse at 40% 40%, rgba(22, 163, 74, 0.12) 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 70%, rgba(91, 33, 182, 0.18) 0%, transparent 50%),
+                  #0a0a0f;
+    }
+
+    /* ===== GRID OVERLAY ===== */
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(91, 33, 182, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(91, 33, 182, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.4rem);
+      color: rgba(232, 232, 240, 0.7);
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    /* ===== GRADIENTS TEXT ===== */
+    .text-gradient {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5, #2563eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-gradient-warm {
+      background: linear-gradient(135deg, #e879a0, #7c3aed, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-gradient-green {
+      background: linear-gradient(135deg, #2dd4a0, #2563eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== LAYOUT HELPERS ===== */
+    .split {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .split > .text-side { flex: 1.1; }
+    .split > .visual-side { flex: 0.9; display: flex; justify-content: center; }
+    .centered {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1000px;
+    }
+
+    /* ===== CARDS ===== */
+    .card-grid {
+      display: grid;
+      gap: 20px;
+      width: 100%;
+      max-width: 1100px;
+    }
+    .card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(109, 40, 217, 0.3);
+      box-shadow: 0 12px 40px rgba(91, 33, 182, 0.12);
+    }
+    .glass-card .icon {
+      font-size: 2rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .glass-card h3 { margin-bottom: 8px; }
+    .glass-card p {
+      color: rgba(232, 232, 240, 0.6);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* ===== IMAGE CONTAINERS ===== */
+    .img-glow {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(91, 33, 182, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      max-width: 480px;
+    }
+    .img-glow img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ===== PILL / BADGE ===== */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: rgba(91, 33, 182, 0.12);
+      border: 1px solid rgba(109, 40, 217, 0.22);
+      color: #9775d1;
+      margin-bottom: 20px;
+    }
+
+    /* ===== PRICING TABLE ===== */
+    .pricing-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 32px 28px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .pricing-card.featured {
+      background: rgba(91, 33, 182, 0.08);
+      border-color: rgba(109, 40, 217, 0.28);
+      box-shadow: 0 0 50px rgba(91, 33, 182, 0.12);
+      transform: scale(1.03);
+    }
+    .pricing-card .plan-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: rgba(232, 232, 240, 0.8);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .pricing-card .price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .pricing-card .period {
+      font-size: 0.85rem;
+      color: rgba(232, 232, 240, 0.5);
+      margin-bottom: 20px;
+    }
+    .pricing-card ul {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 24px;
+    }
+    .pricing-card ul li {
+      padding: 7px 0;
+      font-size: 0.88rem;
+      color: rgba(232, 232, 240, 0.65);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pricing-card ul li::before {
+      content: '✓';
+      color: #34d399;
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .featured-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 100px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== STAT HIGHLIGHT ===== */
+    .stat-row {
+      display: flex;
+      gap: 40px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat .number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+    }
+    .stat .label {
+      font-size: 0.85rem;
+      color: rgba(232, 232, 240, 0.5);
+      margin-top: 4px;
+    }
+
+    /* ===== STEPS ===== */
+    .steps {
+      display: flex;
+      gap: 20px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 1100px;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 18px 20px;
+      flex: 1;
+      min-width: 220px;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .step-item h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .step-item p {
+      font-size: 0.82rem;
+      color: rgba(232, 232, 240, 0.55);
+      line-height: 1.4;
+    }
+
+    /* ===== CTA BUTTON ===== */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+    }
+    .cta-primary {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: white;
+      box-shadow: 0 4px 24px rgba(91, 33, 182, 0.3);
+    }
+    .cta-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(91, 33, 182, 0.4);
+    }
+    .cta-outline {
+      background: transparent;
+      color: #9775d1;
+      border: 1.5px solid rgba(109, 40, 217, 0.35);
+    }
+    .cta-outline:hover {
+      background: rgba(91, 33, 182, 0.1);
+      border-color: rgba(109, 40, 217, 0.55);
+    }
+
+    /* ===== NAVIGATION ===== */
+    .nav-bar {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      background: rgba(15, 15, 25, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 100px;
+      z-index: 100;
+    }
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+    .nav-dot.active {
+      background: #7c3aed;
+      box-shadow: 0 0 12px rgba(109, 40, 217, 0.4);
+      width: 28px;
+      border-radius: 100px;
+    }
+    .nav-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(232, 232, 240, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    .nav-arrow:hover {
+      background: rgba(91, 33, 182, 0.2);
+      border-color: rgba(109, 40, 217, 0.35);
+      color: white;
+    }
+
+    .slide-counter {
+      position: fixed;
+      top: 28px;
+      right: 36px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(232, 232, 240, 0.35);
+      z-index: 100;
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #7c3aed, #4f46e5, #2563eb);
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 100;
+    }
+
+    /* ===== FLOATING PARTICLES ===== */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      animation: float-particle linear infinite;
+    }
+    @keyframes float-particle {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .slide.active .fade-up {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .slide.active .fade-up:nth-child(1) { transition-delay: 0.1s; }
+    .slide.active .fade-up:nth-child(2) { transition-delay: 0.25s; }
+    .slide.active .fade-up:nth-child(3) { transition-delay: 0.4s; }
+    .slide.active .fade-up:nth-child(4) { transition-delay: 0.55s; }
+    .slide.active .fade-up:nth-child(5) { transition-delay: 0.7s; }
+
+    /* CARD STAGGER */
+    .slide.active .stagger-1 { transition-delay: 0.2s; }
+    .slide.active .stagger-2 { transition-delay: 0.35s; }
+    .slide.active .stagger-3 { transition-delay: 0.5s; }
+
+    /* PULSE GLOW */
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 30px rgba(91, 33, 182, 0.12); }
+      50% { box-shadow: 0 0 60px rgba(91, 33, 182, 0.25); }
+    }
+    .pulse { animation: pulse-glow 3s ease-in-out infinite; }
+
+    /* WAVEFORM */
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 40px;
+      margin-top: 16px;
+    }
+    .waveform .bar {
+      width: 4px;
+      border-radius: 4px;
+      background: linear-gradient(to top, #7c3aed, #4f46e5);
+      animation: wave 1.2s ease-in-out infinite;
+    }
+    @keyframes wave {
+      0%, 100% { height: 8px; }
+      50% { height: 36px; }
+    }
+
+    /* ===== TESTIMONIAL ===== */
+    .quote-block {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid #7c3aed;
+      padding: 24px 28px;
+      border-radius: 0 14px 14px 0;
+      max-width: 600px;
+      margin-top: 20px;
+    }
+    .quote-block .quote-text {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(232, 232, 240, 0.75);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .quote-block .quote-author {
+      font-size: 0.85rem;
+      color: rgba(232, 232, 240, 0.45);
+    }
+
+    /* ===== AUDIENCE TAGS ===== */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    .tag {
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      color: rgba(232, 232, 240, 0.7);
+      transition: all 0.3s ease;
+    }
+    .tag:hover {
+      border-color: rgba(109, 40, 217, 0.35);
+      background: rgba(91, 33, 182, 0.1);
+      color: #9775d1;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .slide { padding: 40px 30px; }
+      .split { flex-direction: column; gap: 30px; }
+      .card-grid-3 { grid-template-columns: 1fr; }
+      .card-grid-2 { grid-template-columns: 1fr; }
+      .steps { flex-direction: column; }
+      .stat-row { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Grid overlay for subtle texture -->
+  <div class="grid-overlay"></div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Slide counter -->
+  <div class="slide-counter" id="slideCounter">01 / 10</div>
+
+  <!-- ===== DECK ===== -->
+  <div class="deck" id="deck">
+
+    <!-- ========== SLIDE 1 — TITLE ========== -->
+    <div class="slide bg-gradient-1 active" id="slide-1">
+      <div class="centered">
+        <div class="fade-up">
+          <img src="./images/gabrielai_logo.png" alt="GabrielAI Logo" style="height: 80px; margin-bottom: 12px; border-radius: 12px;" />
+        </div>
+        <h1 class="fade-up" style="margin-bottom: 16px;">
+          Your Voice.<br /><span class="text-gradient">Everywhere.</span>
+        </h1>
+        <p class="subtitle fade-up">
+          AI-powered voicemail drops that sound like you, reach thousands,
+          and close deals — while you sleep. ☕
+        </p>
+        <div class="waveform fade-up" style="margin-bottom: 28px;">
+          <div class="bar" style="animation-delay: 0s;"></div>
+          <div class="bar" style="animation-delay: 0.1s;"></div>
+          <div class="bar" style="animation-delay: 0.2s;"></div>
+          <div class="bar" style="animation-delay: 0.3s;"></div>
+          <div class="bar" style="animation-delay: 0.15s;"></div>
+          <div class="bar" style="animation-delay: 0.25s;"></div>
+          <div class="bar" style="animation-delay: 0.05s;"></div>
+          <div class="bar" style="animation-delay: 0.35s;"></div>
+          <div class="bar" style="animation-delay: 0.18s;"></div>
+          <div class="bar" style="animation-delay: 0.28s;"></div>
+          <div class="bar" style="animation-delay: 0.08s;"></div>
+          <div class="bar" style="animation-delay: 0.22s;"></div>
+        </div>
+        <a class="cta-btn cta-primary fade-up" href="https://home.gabrielai.co/" target="_blank">Get Started →</a>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 2 — THE PROBLEM ========== -->
+    <div class="slide bg-gradient-3" id="slide-2">
+      <div class="centered">
+        <span class="pill fade-up">😩 The Problem</span>
+        <h2 class="fade-up" style="margin-bottom: 16px;">
+          Cold outreach is <span class="text-gradient-warm">broken.</span>
+        </h2>
+        <p class="subtitle fade-up" style="margin-bottom: 36px;">
+          Emails get buried. Calls go to voicemail anyway. Your reps spend 80% of their day
+          <em>not</em> talking to anyone. Meanwhile, voicemail is the one channel prospects
+          actually <strong>listen to</strong>.
+        </p>
+        <div class="card-grid card-grid-3 fade-up">
+          <div class="glass-card stagger-1 fade-up">
+            <span class="icon">📧</span>
+            <h3>Emails?</h3>
+            <p>Average open rate for cold email is under 24%. Most land in spam or the promotions tab.</p>
+          </div>
+          <div class="glass-card stagger-2 fade-up">
+            <span class="icon">📞</span>
+            <h3>Cold Calls?</h3>
+            <p>It takes 18+ dials to reach one prospect. Nobody picks up anymore.</p>
+          </div>
+          <div class="glass-card stagger-3 fade-up">
+            <span class="icon">🎧</span>
+            <h3>Voicemail?</h3>
+            <p>95% of voicemails are listened to. It's personal, it's warm, and it <em>works</em>. But it doesn't scale… until now.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 3 — THE SOLUTION ========== -->
+    <div class="slide bg-gradient-1" id="slide-3">
+      <div class="split">
+        <div class="text-side">
+          <span class="pill fade-up">💡 The Solution</span>
+          <h2 class="fade-up" style="margin-bottom: 16px;">
+            Meet <span class="text-gradient">GabrielAI</span>
+          </h2>
+          <p class="subtitle fade-up" style="margin-bottom: 24px;">
+            Clone your voice with AI. Write one message. Personalize it for
+            every single contact. Drop thousands of voicemails that sound like
+            <strong>you</strong> — in a single click.
+          </p>
+          <p class="subtitle fade-up" style="font-size: 0.95rem;">
+            No robocalls. No spam vibes. Just your voice, your words, delivered
+            straight to their voicemail — without their phone ever ringing. 🤫
+          </p>
+        </div>
+        <div class="visual-side fade-up">
+          <div class="img-glow pulse">
+            <img src="./images/hero_illustration.png" alt="GabrielAI hero" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 4 — VOICE CLONING ========== -->
+    <div class="slide bg-gradient-4" id="slide-4">
+      <div class="split">
+        <div class="visual-side fade-up">
+          <div class="img-glow">
+            <img src="./images/voice_cloning.png" alt="AI Voice Cloning" />
+          </div>
+        </div>
+        <div class="text-side">
+          <span class="pill fade-up">🎙️ Voice Cloning</span>
+          <h2 class="fade-up" style="margin-bottom: 16px;">
+            Sound like <span class="text-gradient-warm">yourself</span>, at scale.
+          </h2>
+          <p class="subtitle fade-up" style="margin-bottom: 24px;">
+            Upload a short voice sample — just a few seconds — and our AI
+            (powered by ElevenLabs) creates a voice that sounds remarkably like you.
+            Warm, natural, and impossible to tell apart from the real thing.
+          </p>
+          <div class="fade-up" style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <span class="tag">🎤 Upload once</span>
+            <span class="tag">🧬 Clone your voice</span>
+            <span class="tag">🔁 Reuse forever</span>
+            <span class="tag">👥 Up to 4 voices</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 5 — HOW IT WORKS ========== -->
+    <div class="slide bg-gradient-2" id="slide-5">
+      <div class="centered">
+        <span class="pill fade-up">⚡ How It Works</span>
+        <h2 class="fade-up" style="margin-bottom: 8px;">
+          From zero to <span class="text-gradient-green">thousands of voicemails</span> in minutes
+        </h2>
+        <p class="subtitle fade-up" style="margin-bottom: 32px;">
+          Our 8-step campaign builder makes it dead simple.
+        </p>
+        <div class="steps fade-up">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div><h4>Name it</h4><p>Give your campaign a name</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div><h4>Upload contacts</h4><p>CSV import with smart validation</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div><h4>Write your message</h4><p>Use dynamic fields for personalization</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div><h4>Pick a voice</h4><p>Choose your cloned AI voice</p></div>
+          </div>
+        </div>
+        <div class="steps fade-up" style="margin-top: 12px;">
+          <div class="step-item">
+            <div class="step-num">5</div>
+            <div><h4>Set forwarding</h4><p>Route callbacks to the right person</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">6</div>
+            <div><h4>Schedule</h4><p>Pick the perfect time & timezone</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">7</div>
+            <div><h4>Review</h4><p>Preview everything before launch</p></div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">8</div>
+            <div><h4>Launch 🚀</h4><p>Hit send and watch the magic</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 6 — PERSONALIZATION ========== -->
+    <div class="slide bg-gradient-3" id="slide-6">
+      <div class="split">
+        <div class="text-side">
+          <span class="pill fade-up">✨ Personalization</span>
+          <h2 class="fade-up" style="margin-bottom: 16px;">
+            Every voicemail feels <span class="text-gradient">one-to-one</span>
+          </h2>
+          <p class="subtitle fade-up" style="margin-bottom: 20px;">
+            Use dynamic fields to weave in each contact's name, company, city — whatever
+            matters. Each message is uniquely generated, so every prospect hears something
+            that sounds crafted just for them.
+          </p>
+          <div class="glass-card fade-up" style="font-family: monospace; font-size: 0.9rem; line-height: 1.8; color: rgba(232,232,240,0.7); margin-top: 8px;">
+            <span style="color: rgba(232,232,240,0.4);">Message template:</span><br />
+            "Hey <span style="color: #7c3aed; font-weight: 600;">{first_name}</span>, this is
+            <span style="color: #4f46e5; font-weight: 600;">{agent_name}</span>. I saw your
+            listing in <span style="color: #2563eb; font-weight: 600;">{city}</span> and wanted
+            to reach out about how we can help you close faster. Give me a call back!"
+          </div>
+        </div>
+        <div class="visual-side fade-up">
+          <div class="img-glow">
+            <img src="./images/campaign_builder.png" alt="Campaign Builder" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 7 — ANALYTICS ========== -->
+    <div class="slide bg-gradient-4" id="slide-7">
+      <div class="split">
+        <div class="visual-side fade-up">
+          <div class="img-glow">
+            <img src="./images/analytics_dashboard.png" alt="Analytics Dashboard" />
+          </div>
+        </div>
+        <div class="text-side">
+          <span class="pill fade-up">📊 Analytics</span>
+          <h2 class="fade-up" style="margin-bottom: 16px;">
+            Know what's <span class="text-gradient-green">working</span>
+          </h2>
+          <p class="subtitle fade-up" style="margin-bottom: 28px;">
+            Real-time dashboards show you exactly who received your voicemail,
+            who called back, and how every campaign is performing — so you can
+            double down on what's landing.
+          </p>
+          <div class="stat-row fade-up">
+            <div class="stat">
+              <div class="number text-gradient">95%</div>
+              <div class="label">Listen rate</div>
+            </div>
+            <div class="stat">
+              <div class="number text-gradient-green">3.2×</div>
+              <div class="label">More callbacks</div>
+            </div>
+            <div class="stat">
+              <div class="number text-gradient-warm">80%</div>
+              <div class="label">Time saved</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 8 — WHO IT'S FOR ========== -->
+    <div class="slide bg-gradient-5" id="slide-8">
+      <div class="split">
+        <div class="text-side">
+          <span class="pill fade-up">🎯 Who It's For</span>
+          <h2 class="fade-up" style="margin-bottom: 16px;">
+            Built for people who <span class="text-gradient-warm">live on the phone</span>
+          </h2>
+          <p class="subtitle fade-up" style="margin-bottom: 24px;">
+            If your business depends on reaching people and building relationships
+            fast, GabrielAI is your unfair advantage.
+          </p>
+          <div class="tag-cloud fade-up">
+            <span class="tag">🏠 Real Estate Agents</span>
+            <span class="tag">🏦 Mortgage Brokers</span>
+            <span class="tag">🛡️ Insurance Teams</span>
+            <span class="tag">🤝 Recruiters</span>
+            <span class="tag">💼 B2B Sales</span>
+            <span class="tag">🏥 Healthcare Outreach</span>
+            <span class="tag">🎓 Education</span>
+            <span class="tag">🚗 Auto Dealerships</span>
+          </div>
+          <div class="quote-block fade-up" style="margin-top: 28px;">
+            <div class="quote-text">"I dropped 500 voicemails before my morning coffee. Three of them turned into listings that week."</div>
+            <div class="quote-author">— A very happy real estate agent 🏡</div>
+          </div>
+        </div>
+        <div class="visual-side fade-up">
+          <div class="img-glow">
+            <img src="./images/target_audience.png" alt="Target Audience" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 9 — PRICING ========== -->
+    <div class="slide bg-gradient-1" id="slide-9">
+      <div class="centered">
+        <span class="pill fade-up">💰 Pricing</span>
+        <h2 class="fade-up" style="margin-bottom: 8px;">
+          Simple, <span class="text-gradient">credit-based</span> pricing
+        </h2>
+        <p class="subtitle fade-up" style="margin-bottom: 36px;">
+          No setup fees. No surprises. Just pay for what you use.
+        </p>
+        <div class="card-grid card-grid-3 fade-up">
+          <div class="pricing-card stagger-1 fade-up">
+            <div class="plan-name">Launch</div>
+            <div class="price text-gradient">$200</div>
+            <div class="period">per month</div>
+            <ul>
+              <li>1,000 voicemail credits</li>
+              <li>1 AI voice clone</li>
+              <li>CSV contact import</li>
+              <li>Basic analytics</li>
+              <li>2-day call forwarding</li>
+              <li>Email support</li>
+            </ul>
+            <a class="cta-btn cta-outline" href="https://home.gabrielai.co/" target="_blank" style="width: 100%; justify-content: center;">Get Started</a>
+          </div>
+          <div class="pricing-card featured stagger-2 fade-up">
+            <div class="featured-badge">Most Popular</div>
+            <div class="plan-name">Scale</div>
+            <div class="price text-gradient-warm">$600</div>
+            <div class="period">per month</div>
+            <ul>
+              <li>5,000 voicemail credits</li>
+              <li>3 AI voice clones</li>
+              <li>HubSpot integration</li>
+              <li>Advanced analytics</li>
+              <li>5-day call forwarding</li>
+              <li>Priority support</li>
+            </ul>
+            <a class="cta-btn cta-primary" href="https://home.gabrielai.co/" target="_blank" style="width: 100%; justify-content: center;">Choose Scale</a>
+          </div>
+          <div class="pricing-card stagger-3 fade-up">
+            <div class="plan-name">Dominate</div>
+            <div class="price text-gradient-green">$1,000</div>
+            <div class="period">per month</div>
+            <ul>
+              <li>10,000+ voicemail credits</li>
+              <li>4 AI voice clones</li>
+              <li>All integrations</li>
+              <li>Full analytics suite</li>
+              <li>7-day call forwarding</li>
+              <li>Dedicated account manager</li>
+            </ul>
+            <a class="cta-btn cta-outline" href="https://home.gabrielai.co/" target="_blank" style="width: 100%; justify-content: center;">Go Big</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 10 — CTA / CLOSE ========== -->
+    <div class="slide bg-gradient-3" id="slide-10">
+      <div class="centered">
+        <div class="fade-up" style="font-size: 4rem; margin-bottom: 12px;">🚀</div>
+        <h1 class="fade-up" style="margin-bottom: 16px;">
+          Ready to <span class="text-gradient-warm">drop in</span>?
+        </h1>
+        <p class="subtitle fade-up" style="margin-bottom: 36px;">
+          Stop dialing. Start dropping. Your prospects are waiting to hear
+          from you — literally. Let's make it happen.
+        </p>
+        <div class="fade-up" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+          <a class="cta-btn cta-primary" href="https://home.gabrielai.co/" target="_blank">Start Free Trial →</a>
+          <a class="cta-btn cta-outline" href="mailto:admin@gabrielai.co">Book a Demo 📅</a>
+        </div>
+        <div class="fade-up" style="margin-top: 48px; color: rgba(232,232,240,0.35); font-size: 0.85rem;">
+          <strong style="color: rgba(232,232,240,0.5);">gabrielai.co</strong> &nbsp;·&nbsp; admin@gabrielai.co &nbsp;·&nbsp; Made with 💜 and a lot of AI
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="nav-bar" id="navBar">
+    <button class="nav-arrow" id="prevBtn" aria-label="Previous slide">←</button>
+    <button class="nav-dot active" data-slide="0" aria-label="Slide 1"></button>
+    <button class="nav-dot" data-slide="1" aria-label="Slide 2"></button>
+    <button class="nav-dot" data-slide="2" aria-label="Slide 3"></button>
+    <button class="nav-dot" data-slide="3" aria-label="Slide 4"></button>
+    <button class="nav-dot" data-slide="4" aria-label="Slide 5"></button>
+    <button class="nav-dot" data-slide="5" aria-label="Slide 6"></button>
+    <button class="nav-dot" data-slide="6" aria-label="Slide 7"></button>
+    <button class="nav-dot" data-slide="7" aria-label="Slide 8"></button>
+    <button class="nav-dot" data-slide="8" aria-label="Slide 9"></button>
+    <button class="nav-dot" data-slide="9" aria-label="Slide 10"></button>
+    <button class="nav-arrow" id="nextBtn" aria-label="Next slide">→</button>
+  </nav>
+
+  <!-- ===== FLOATING PARTICLES ===== -->
+  <script>
+    // Create ambient floating particles
+    (function createParticles() {
+      const colors = ['rgba(91,33,182,0.12)', 'rgba(79,70,229,0.10)', 'rgba(37,99,235,0.08)'];
+      for (let i = 0; i < 15; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const size = Math.random() * 6 + 2;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.animationDuration = (Math.random() * 20 + 15) + 's';
+        p.style.animationDelay = (Math.random() * 15) + 's';
+        document.body.appendChild(p);
+      }
+    })();
+  </script>
+
+  <!-- ===== SLIDE ENGINE ===== -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.nav-dot');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressBar = document.getElementById('progressBar');
+    const slideCounter = document.getElementById('slideCounter');
+    let current = 0;
+    let isTransitioning = false;
+
+    function goToSlide(index) {
+      if (index === current || isTransitioning) return;
+      if (index < 0 || index >= slides.length) return;
+
+      isTransitioning = true;
+      const prev = current;
+      const goingForward = index > current;
+
+      // Exit current slide
+      slides[prev].classList.remove('active');
+      slides[prev].classList.add(goingForward ? 'exit-left' : 'exit-right');
+      setTimeout(() => {
+        slides[prev].classList.remove('exit-left', 'exit-right');
+      }, 600);
+
+      // Enter new slide
+      slides[index].style.transform = goingForward ? 'translateX(60px)' : 'translateX(-60px)';
+      requestAnimationFrame(() => {
+        slides[index].classList.add('active');
+      });
+
+      // Update dots
+      dots[prev].classList.remove('active');
+      dots[index].classList.add('active');
+
+      // Update progress & counter
+      const progress = ((index) / (slides.length - 1)) * 100;
+      progressBar.style.width = progress + '%';
+      slideCounter.textContent =
+        String(index + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+
+      current = index;
+      setTimeout(() => { isTransitioning = false; }, 600);
+    }
+
+    // Dot clicks
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        goToSlide(parseInt(dot.dataset.slide));
+      });
+    });
+
+    // Arrow buttons
+    prevBtn.addEventListener('click', () => goToSlide(current - 1));
+    nextBtn.addEventListener('click', () => goToSlide(current + 1));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        goToSlide(current + 1);
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToSlide(current - 1);
+      }
+      // Home / End
+      if (e.key === 'Home') goToSlide(0);
+      if (e.key === 'End') goToSlide(slides.length - 1);
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    document.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) {
+        diff > 0 ? goToSlide(current + 1) : goToSlide(current - 1);
+      }
+    });
+
+    // Init progress
+    progressBar.style.width = '0%';
+
+    // Re-enable transitions on slide 1 after first navigation
+    let firstNav = true;
+    const origGoToSlide = goToSlide;
+    goToSlide = function(index) {
+      if (firstNav && index !== current) {
+        firstNav = false;
+        document.getElementById('slide-1').style.transition = '';
+        document.getElementById('slide-1').removeAttribute('style');
+      }
+      origGoToSlide(index);
+    };
+  </script>
+</body>
+</html>
